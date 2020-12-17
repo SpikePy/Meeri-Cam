@@ -5,7 +5,7 @@ fswebcam \
   --no-banner \
   --frames 20 \
   --jpeg 95 \
-  --loop 30 \
+  --loop 10 \
   --save /var/www/html/ramdisk/latest.jpg \
   --exec 'cwebp -quiet -q 85 /var/www/html/ramdisk/latest.jpg -o /var/www/html/ramdisk/buffer.webp;
           rm /var/www/html/ramdisk/latest.jpg;
