@@ -1,8 +1,10 @@
 # Meeri-Cam
 
-1. install webp converter via `sudo apt install webp`
+1. install webp fswebcam lighttpd `sudo apt install webp fswebcam lighttpd`
 2. add 'mimetype.assign   += ( ".webp" => "image/webp" )' to /etc/lighttpd/lighttpd.conf to make browser show webp images
 3. create a ramdisk to write images to, to  go easy on sd-card
+4. enable dir listing 
+5. `ln -f index.html /var/www/html/`
 
 ```
 fswebcam \
@@ -15,6 +17,7 @@ fswebcam \
   --exec 'cwebp -q 85 /var/www/html/ramdisk/cam.jpg -o /var/www/html/ramdisk/cam.webp; cp /var/www/html/ramdisk/cam.webp /var/www/html/ramdisk/$(date +%Y%m%d_%H%M%S)_cam.webp'
 ```
 
+```
 # --set options
 Available Controls        Current Value   Range
 ------------------        -------------   -----
@@ -31,3 +34,4 @@ Exposure, Auto            Aperture Priority Mode Manual Mode | Aperture Priority
 Exposure (Absolute)       155 (1%)        1 - 10000
 Exposure, Auto Priority   True            True | False
 Privacy                   False           True | False
+```
