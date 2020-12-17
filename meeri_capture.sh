@@ -4,6 +4,8 @@ fswebcam \
   --resolution 1280x1024 \
   --no-banner \
   --frames 20 \
+  --fps 10 \
+  --skip 1 \
   --jpeg 100 \
   --loop 10 \
   --save /var/www/html/ramdisk/latest.jpg \
