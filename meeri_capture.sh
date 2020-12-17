@@ -4,7 +4,7 @@ fswebcam \
   --resolution 1280x1024 \
   --no-banner \
   --frames 20 \
-  --jpeg 95 \
+  --jpeg 100 \
   --loop 10 \
   --save /var/www/html/ramdisk/latest.jpg \
   --exec 'cwebp -quiet -q 85 /var/www/html/ramdisk/latest.jpg -o /var/www/html/ramdisk/buffer.webp;
