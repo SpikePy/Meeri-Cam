@@ -2,6 +2,9 @@
   <title>Meeri-Cam</title>
   <meta charset='UTF-8'>
   <meta http-equiv="refresh" content="30">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <link rel='icon' type='image/svg+xml' href='favicon.svg'>
   <link rel="manifest" href="manifest.webmanifest">
   <style>
@@ -53,7 +56,7 @@
     }
   </style>
   <script>
-    window.onload = setInterval(clock,1000);
+    window.onload = setInterval(clock,500);
     function clock() {
       var weekday = new Array(7);
       weekday[0] = "Sunday"
