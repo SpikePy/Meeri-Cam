@@ -6,8 +6,10 @@
 #                 #
 ###################
 
-clear
 debug=0
+time_start=$(date +%s)
+clear
+
 
 ## [ Parameters ] ##############################################################
 # Path to investigate
@@ -19,6 +21,9 @@ min_size=30
 min_relative_size=75
 # Reset relativ size after n fails
 relative_size_reset_after=5
+# Logfile
+logfile=~/meeri_cam.log
+
 
 ## [ Set Initial Values ]#######################################################
 count_files=$(/bin/ls -1 ${path}/[0-9]*.webp | wc -l)
@@ -26,13 +31,15 @@ count_files=$(/bin/ls -1 ${path}/[0-9]*.webp | wc -l)
 
 ## [ Debug ] ###################################################################
 if [ ${debug} -eq 1 ]; then
-  echo "DEBUG ENABLED"
+  echo " ######################"
+  echo " # DEBUG MODE ENABLED #"
+  echo " ######################"
+  echo
   mkdir -p ${path}/delete
 fi
 
 
 ## [ Logic ] ###################################################################
-time \
 for file in $(/bin/ls -1 ${path}/[0-9]*.webp); do
   echo -n "${file}: "
   size_current=$(du ${file} | cut -f1)
@@ -67,6 +74,16 @@ for file in $(/bin/ls -1 ${path}/[0-9]*.webp); do
     size_before=${size_current}
   fi
 done
-echo "Deleted $((count_deleted_min_size + count_deleted_min_relative_size)) of ${count_files} files"
-echo "Absolute filesize: ${count_deleted_min_size:=0}"
-echo "Relative filesize: ${count_deleted_min_relative_size:=0}"
+
+time_finish=$(date +%s)
+
+cat << EOF | tee -a ${logfile}
+$(date +"%Y-%m-%d %H:%M:%S")
+Cleanup Images
+==============
+Execution time: $(( time_finish - time_start ))s
+Deleted $((count_deleted_min_size + count_deleted_min_relative_size)) of ${count_files} files
+  - Absolute filesize: ${count_deleted_min_size:-0}
+  - Relative filesize: ${count_deleted_min_relative_size:-0}
+
+EOF
