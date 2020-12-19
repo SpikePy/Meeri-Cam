@@ -1,7 +1,16 @@
 #!/bin/bash
 clear
 
-mkdir --parents /var/www/html/ramdisk/thumbnails
+
+## [ Parameters ] #############################################################
+# Image path
+export path=/var/www/html/ramdisk
+# Image name
+export filename=current
+
+
+## [ Logic ] ##################################################################
+mkdir --parents ${path}/thumbnails
 
 fswebcam \
   --resolution 1280x1024 \
@@ -11,11 +20,9 @@ fswebcam \
   --skip 1 \
   --jpeg 100 \
   --loop 10 \
-  --save /var/www/html/ramdisk/current.jpg \
-  --exec 'cwebp -quiet -q 85 /var/www/html/ramdisk/current.jpg -o /var/www/html/ramdisk/buffer.webp;
-          mv /var/www/html/ramdisk/buffer.webp /var/www/html/ramdisk/current.webp;
-          cp /var/www/html/ramdisk/current.jpg /var/www/html/ramdisk/$(date +%Y%m%d_%H%M%S).jpg;
-          ~/*/image_filter.sh;
-	  test -f current.jpg && cp /var/www/html/ramdisk/current.webp /var/www/html/ramdisk/$(date +%Y%m%d_%H%M%S).webp;
-          test -f current.jpg && cwebp -quiet -q 70 /var/www/html/ramdisk/current.jpg -resize 480 0 -o /var/www/html/ramdisk/thumbnails/$(date +%Y%m%d_%H%M%S).webp;
-          rm /var/www/html/ramdisk/current.jpg'
+  --save ${path}/${filename}.jpg \
+  --exec 'cwebp -quiet -q 85 ${path}/${filename}.jpg -o ${path}/buffer.webp;
+          mv  ${path}/buffer.webp  ${path}/${filename}.webp;
+	  cp ${path}/${filename}.webp ${path}/$(date +%Y%m%d_%H%M%S).webp;
+          cwebp -quiet -q 70 ${path}/${filename}.jpg -resize 480 0 -o ${path}/thumbnails/$(date +%Y%m%d_%H%M%S).webp;
+          rm ${path}/${filename}.jpg'
