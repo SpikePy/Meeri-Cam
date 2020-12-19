@@ -77,6 +77,8 @@ done
 
 time_finish=$(date +%s)
 
+
+## [ Log ] #####################################################################
 cat << EOF | tee -a ${logfile}
 $(date +"%Y-%m-%d %H:%M:%S")
 Cleanup Images
