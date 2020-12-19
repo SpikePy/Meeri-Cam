@@ -7,17 +7,16 @@
 ###################
 
 clear
-debug=1
+debug=0
 
 ## [ Parameters ] ##############################################################
 # Path to investigate
 path=/var/www/html/ramdisk
-#path=/mnt/c/Users/rho/Desktop/meeri_cam/18_copy
 # Minimal size in kb
 # 1280x1024 webp 85%: 30kb
 min_size=30
 # Max relative size reduction in percent
-min_relative_size=90
+min_relative_size=75
 # Reset relativ size after n fails
 relative_size_reset_after=5
 
@@ -28,7 +27,7 @@ count_files=$(/bin/ls -1 ${path}/[0-9]*.webp | wc -l)
 ## [ Debug ] ###################################################################
 if [ ${debug} -eq 1 ]; then
   echo "DEBUG ENABLED"
-  mkdir -i ${path}/delete
+  mkdir -p ${path}/delete
 fi
 
 
