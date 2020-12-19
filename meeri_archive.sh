@@ -4,12 +4,12 @@ time_start=$(date +%s)
 
 ## [ Parameters ] ##############################################################
 path_photos=/var/www/html/ramdisk
-path_archive=/var/www/html/persistent
-filename=meeri_archive_$(date +%Y%m%d).zip
+path_archive=/var/www/html/persistent/$(date +%Y%m%d)
 
 
 ## [ Logic ] ###################################################################
-zip ${path_photos}/$(date +%Y%m%d)*.webp ${path_archive}/meeri_archive_$(date +%Y%m%d).zip
+mkdir -p ${path_archive}
+mv ${path_photos}/$(date +%Y%m%d)* ${path_archive}
 time_finished1=$(date +%s)
 
 
