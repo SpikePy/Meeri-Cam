@@ -28,7 +28,7 @@ count_files=$(/bin/ls -1 ${path}/[0-9]*.webp | wc -l)
 ## [ Debug ] ###################################################################
 if [ ${debug} -eq 1 ]; then
   echo "DEBUG ENABLED"
-  mkdir ${path}/delete
+  mkdir -i ${path}/delete
 fi
 
 
@@ -42,7 +42,7 @@ for file in $(/bin/ls -1 ${path}/[0-9]*.webp); do
   # Delete images with not enough detail (unsharp/to dark)
   if [ ${size_current} -lt ${min_size} ]; then
     echo "Image discarded (absolute filesize ${size_current}k < ${min_size}k)"
-    if [ "$debug" -eq 1 ]; then
+    if [ "${debug}" -eq 1 ]; then
       mv ${file} ${path}/delete
     else
       rm ${file}
