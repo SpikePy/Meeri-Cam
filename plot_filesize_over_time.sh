@@ -18,18 +18,20 @@ cat << EOF > /tmp/gnuplot_settings
   set timefmt '%H:%M:%S'  # specify our time string format
   set format x '%H:%M:%S' # otherwise it will show only MM:SS
   set format y "%.0s%cByte"
+  set format y2 "%.0s%cByte"
 
   # Labels
   set title 'Filesize over Time'
   set ylabel 'File Size'
   set xlabel 'Time'
   set label "Minimal File Size" at "7:15:00",32000 textcolor "red"
+  set label "Minimal File Size" at "17:36:00",32000 textcolor "red"
 
   # Axis
   set autoscale y
   set ytics 10000
   set y2tics 10000
-  set xrange ['07:00:00':'18:00:00']
+  #set xrange ['07:00:00':'18:00:00']
   set xtics '00:15:00'
   set mxtics 15
 
@@ -39,7 +41,8 @@ cat << EOF > /tmp/gnuplot_settings
   set output "${path_target}/$(date +%Y%m%d)${append}.svg"
 
   # Styles (http://lowrank.net/gnuplot/intro/style-e.html) dots|impulses|steps|histeps|lines
-  plot "${path_target}/$(date +%Y%m%d)${append}.csv" using 2:1 with histeps linecolor rgbcolor "#00aa00" title 'File Size', 30000 linecolor rgbcolor "red" title ''
+  set key left
+  plot "${path_target}/$(date +%Y%m%d)${append}.csv" using 2:1 with histeps linecolor rgbcolor "#00aa00" title 'File Size', 30000 linecolor rgbcolor "red" notitle
 EOF
 
 gnuplot -p /tmp/gnuplot_settings
