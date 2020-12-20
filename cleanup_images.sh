@@ -6,9 +6,13 @@
 #                 #
 ###################
 
-debug=0
-time_start=$(date +%s)
 clear
+
+
+## [ Variables ] ###############################################################
+debug=0
+logging=1
+time_start=$(date +%s)
 
 
 ## [ Parameters ] ##############################################################
@@ -23,10 +27,6 @@ min_relative_size=75
 relative_size_reset_after=5
 # Logfile
 logfile=~/meeri_cam.log
-
-
-## [ Set Initial Values ]#######################################################
-count_files=$(/bin/ls -1 ${path}/[0-9]*.webp | wc -l)
 
 
 ## [ Debug ] ###################################################################
@@ -75,17 +75,16 @@ for file in $(/bin/ls -1 ${path}/[0-9]*.webp); do
   fi
 done
 
+
+## [ Logging ] #################################################################
 time_finish=$(date +%s)
+test ${logging} -eq 0 && logfile=/dev/null
 
-
-## [ Log ] #####################################################################
 cat << EOF | tee -a ${logfile}
 $(date +"%Y-%m-%d %H:%M:%S")
-Cleanup Images
-==============
-Execution time: $(( time_finish - time_start ))s
-Deleted $((count_deleted_min_size + count_deleted_min_relative_size)) of ${count_files} files
-  - Absolute filesize: ${count_deleted_min_size:-0}
-  - Relative filesize: ${count_deleted_min_relative_size:-0}
-
+  Cleanup Images
+    Deleted $((count_deleted_min_size + count_deleted_min_relative_size)) of $(/bin/ls -1 ${path}/[0-9]*.webp | wc -l) files
+    Absolute filesize: ${count_deleted_min_size:-0}
+    Relative filesize: ${count_deleted_min_relative_size:-0}
+    Execution time: $(( time_finish - time_start ))s
 EOF
