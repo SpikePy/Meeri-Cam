@@ -3,6 +3,7 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
+date=${date}
 path_html_ramdisk=${path_html_ramdisk}
 path_html_archive=${path_html_archive}
 filepath_log=${filepath_log}

@@ -7,7 +7,6 @@
 ###################
 
 source $(dirname $0)/env
-clear
 
 
 ## [ Parameters ] ##############################################################
@@ -23,12 +22,11 @@ filepath_data_photoSizeByTime=${filepath_data_photoSizeByTime}
 clean_min_absolute_size=${clean_min_absolute_size}
 
 # Max relative size reduction in percent
-clean_min_relative_size=${clean_min_relative_size}
+clean_initial_expectation_percent=${clean_initial_expectation_percent}
+clean_current_expectation_percent=${clean_initial_expectation_percent}
+clean_lower_expectation_percent=${clean_lower_expectation_percent}
 
-# Reset relativ size after n fails
-clean_relative_size_reset_after=${clean_relative_size_reset_after}
-
-debug=0
+debug=1
 logging=${logging}
 date=${date}
 
@@ -65,23 +63,18 @@ for file in $(/bin/ls -1 ${path_photos}/${date}*.webp); do
       rm ${file}
     fi
     let count_min_absolute_size_deleted+=1
-  elif [ ${relative_size_current} -lt ${clean_min_relative_size} ]; then
-    echo "Image discarded: (relative filesize ${relative_size_current}% < ${clean_min_relative_size}%)"
+  elif [ ${relative_size_current} -lt ${clean_current_expectation_percent} ]; then
+    echo "Image discarded: (relative filesize ${relative_size_current}% < ${clean_current_expectation_percent}%)"
     if [ "$debug" -eq 1 ]; then
       mv ${file} ${path_photos}/delete
     else
       rm ${file}
     fi
-    let count_min_relative_size_deleted+=1
-    let count_consecutive_relative_size_failed+=1
+    let clean_current_expectation_percent-=${clean_lower_expectation_percent}
+    let count_current_expectation_failed+=1
   else
     echo "Image ok"
-    count_consecutive_relative_size_failed=0
-    absolute_size_before=${absolute_size_current}
-  fi
-
-  if [ ${count_consecutive_relative_size_failed:=0} -ge ${clean_relative_size_reset_after} ]; then
-    echo "  Reset base size"
+    clean_current_expectation_percent=${clean_initial_expectation_percent}
     absolute_size_before=${absolute_size_current}
   fi
 done
@@ -99,8 +92,8 @@ test ${logging} -eq 0 && logfile=/dev/null
 cat << EOF | tee -a ${filepath_log}
 $(date +"%Y-%m-%d %H:%M:%S")
   Cleanup Images:
-    Deleted $((count_min_absolute_size_deleted + count_min_relative_size_deleted)) of ${count_files} files ($(( (count_min_absolute_size_deleted + count_min_relative_size_deleted) * 100 / count_files ))%)
+    Deleted $((count_min_absolute_size_deleted + count_current_expectation_failed)) of ${count_files} files ($(( (count_min_absolute_size_deleted + count_current_expectation_failed) * 100 / count_files ))%)
       Absolute filesize: ${count_min_absolute_size_deleted:-0}
-      Relative filesize: ${count_min_relative_size_deleted:-0}
+      Relative filesize: ${count_current_expectation_failed:-0}
     Execution time: $(( time_finish - time_start ))s
 EOF

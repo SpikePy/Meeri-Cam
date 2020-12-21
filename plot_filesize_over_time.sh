@@ -1,12 +1,11 @@
 #!/bin/bash
 source $(dirname $0)/env
-clear
 
 
 ## [ Parameters ] ##############################################################
 date=${date}
 filepath_data=${filepath_data_photoSizeByTime}
-filepath_plot=${path_html_persistent}/${date}.svg
+filepath_plot=${path_html_persistent}/${date}_${clean_initial_expectation_percent}_${clean_lower_expectation_percent}.svg
 
 
 ## [ Logic ] ###################################################################
@@ -41,8 +40,8 @@ cat << EOF > /tmp/gnuplot_settings
 
   # Styles (http://lowrank.net/gnuplot/intro/style-e.html) dots|impulses|steps|histeps|lines
   set key left
-  plot "${filepath_data}" using 2:1 with histeps linecolor rgbcolor "#cc00aa00" title 'Dirty', \
-       "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#0000aa00" title 'Clean', \
+  plot "${filepath_data}" using 2:1 with histeps linecolor rgbcolor "#cc00aa00" title "Original", \
+       "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#0000aa00" title "Initial expectation ${clean_initial_expectation_percent}%, lower expectation by ${clean_lower_expectation_percent}%", \
         30000 linecolor rgbcolor "red" notitle
 EOF
 
