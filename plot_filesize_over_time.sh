@@ -42,7 +42,7 @@ cat << EOF > /tmp/gnuplot_settings
   # Styles (http://lowrank.net/gnuplot/intro/style-e.html) dots|impulses|steps|histeps|lines
   set key left
   plot "${filepath_data}" using 2:1 with histeps linecolor rgbcolor "#cc00aa00" title 'Dirty', \
-       "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#ff00aa00" title 'Clean', \
+       "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#0000aa00" title 'Clean', \
         30000 linecolor rgbcolor "red" notitle
 EOF
 
