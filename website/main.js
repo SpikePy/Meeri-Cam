@@ -1,4 +1,10 @@
+// Parameters
+enable_showFileSize = 1
+
+
+
 window.onload = setInterval(clock,500);
+
 function clock() {
   var weekday = new Array(7);
   weekday[0] = "Sunday"
@@ -17,4 +23,12 @@ function clock() {
   var minute = ("0" + d.getMinutes()).slice(-2)
 
   document.getElementById("time").innerHTML = `${weekday[d.getDay()]} ${date}.${month}.${year} ${hour}:${minute}`
+}
+
+function showFileSize() {
+  if ( enable_showFileSize === 1) {
+    document.getElementById('p-filesize').innerHTML = `Size: ${filesize}k`
+  } else {
+    document.getElementById('p-filesize').innerHTML = ""
+  }
 }
