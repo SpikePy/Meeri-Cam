@@ -6,7 +6,7 @@
 #                 #
 ###################
 
-source ~/Meeri-Cam/env
+source $(dirname $0)/env
 clear
 
 

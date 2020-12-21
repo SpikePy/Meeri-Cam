@@ -7,7 +7,7 @@ body {
   overflow: hidden;
 }
 
-#bg {
+#bg-photo {
    position: fixed;
    top: -5;
    left: -5;
@@ -44,7 +44,7 @@ body {
   z-index: 10;
 }
 
-#image {
+#main-photo {
   align-self: center;
   height: calc(100vh - 5em);
   max-width: 1280px;

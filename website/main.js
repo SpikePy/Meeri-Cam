@@ -1,10 +1,9 @@
-// Parameters
-enable_showFileSize = 1
-
-
-
+// Infinite looping commands
 window.onload = setInterval(clock,500);
+window.onload = setInterval(updatePhoto,10000);
 
+
+// Functions
 function clock() {
   var weekday = new Array(7);
   weekday[0] = "Sunday"
@@ -25,10 +24,8 @@ function clock() {
   document.getElementById("time").innerHTML = `${weekday[d.getDay()]} ${date}.${month}.${year} ${hour}:${minute}`
 }
 
-function showFileSize() {
-  if ( enable_showFileSize === 1) {
-    document.getElementById('p-filesize').innerHTML = `Size: ${filesize}k`
-  } else {
-    document.getElementById('p-filesize').innerHTML = ""
-  }
+function updatePhoto() {
+  document.getElementById('bg-photo').src   = "ramdisk/current.webp?" + Date.now()
+  document.getElementById('main-photo').src = "ramdisk/current.webp?" + Date.now()
+  console.log(`Photo updated`)
 }

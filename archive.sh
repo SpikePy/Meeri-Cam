@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/Meeri-Cam/env
+source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
