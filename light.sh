@@ -3,8 +3,8 @@ source $(dirname $0)/env
 
 ## [ Parameters ] ##############################################################
 gpio_pin=${gpio_pin}
-gpio_sensor_filepath=${gpio_sensor_filepath}
-sensor_threshold=${gpio_sensor_threshold}
+gpio_sensor_filepath=${gpio_photo_filepath}
+sensor_threshold=${gpio_threshold_photo_size_kb}
 sensor_intervall=${photo_intervall}
 
 ## [ Logic ] ##################################################################
@@ -23,4 +23,3 @@ while true; do
   fi
   sleep ${sensor_intervall}
 done
-

@@ -25,5 +25,5 @@ clean_relative_size_reset_after=5
 upload_onedrive=1
 
 gpio_pin=17
-gpio_sensor_filepath=${path_html_ramdisk}/${filename_photo_latest}.webp
-gpio_sensor_threshold=45
+gpio_photo_filepath=${path_html_ramdisk}/${filename_photo_latest}.webp
+gpio_threshold_photo_size_kb=45
