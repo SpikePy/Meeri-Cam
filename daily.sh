@@ -7,7 +7,7 @@ clear
 path_pictures=${path_html_ramdisk}
 path_video=${path_html_persistent}
 filepath_video_date=${filepath_video_date}
-path_log=${path_log}
+filepath_log=${filepath_log}
 upload_onedrive=${upload_onedrive}
 path_upload_onedrive=${path_upload_onedrive}
 date=${date}
@@ -29,7 +29,7 @@ if [ "${upload_onedrive}" -eq 1 ]; then cp ${filepath_video_date} ${path_upload_
 
 
 ## [ Logging ] ##################################################################
-cat << EOF | tee -a ${path_log}
+cat << EOF | tee -a ${filepath_log}
   Meeri Daily:
     Size Photos: $(du -hc ${path_pictures}/${date}*.webp | tail -n1 | cut -f1)
     Size Video: $(du -h  ${filepath_video_date} | cut -f1)

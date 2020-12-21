@@ -12,7 +12,7 @@ clear
 
 ## [ Parameters ] ##############################################################
 path_photos=${path_html_ramdisk}
-path_log=${path_log}
+filepath_log=${filepath_log}
 
 filepath_data_photoSizeByTime_dirty=${filepath_data_photoSizeByTime_dirty}
 filepath_data_photoSizeByTime_clean=${filepath_data_photoSizeByTime_clean}
@@ -96,7 +96,7 @@ time_finish=$(date +%s)
 
 test ${logging} -eq 0 && logfile=/dev/null
 
-cat << EOF | tee -a ${path_log}
+cat << EOF | tee -a ${filepath_log}
 $(date +"%Y-%m-%d %H:%M:%S")
   Cleanup Images:
     Deleted $((count_min_absolute_size_deleted + count_min_relative_size_deleted)) of ${count_files} files ($(( (count_min_absolute_size_deleted + count_min_relative_size_deleted) * 100 / count_files ))%)

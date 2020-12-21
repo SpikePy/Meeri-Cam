@@ -5,7 +5,7 @@ source $(dirname $0)/env
 ## [ Parameters ] ##############################################################
 path_html_ramdisk=${path_html_ramdisk}
 path_html_archive=${path_html_archive}
-path_log=${path_log}
+filepath_log=${filepath_log}
 
 ## [ Logic ] ###################################################################
 time_start=$(date +%s)
@@ -18,7 +18,7 @@ time_finished1=$(date +%s)
 
 
 ## [ Log ] #####################################################################
-cat << EOF | tee -a ${path_log}
+cat << EOF | tee -a ${filepath_log}
   Meeri Archive:
     Path: ${path_html_archive}
     Files:  $(/bin/ls -1 | wc -l)

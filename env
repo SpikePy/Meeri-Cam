@@ -6,11 +6,11 @@ logging=1
 path_html_ramdisk=/var/www/html/ramdisk
 path_html_persistent=/var/www/html/persistent
 path_html_archive=/var/www/html/persistent/${date}
-path_log=~/meeri.log
 path_upload_onedrive=~/OneDrive/Meeri-Cam
 
 filename_photo_latest=current
 
+filepath_log=~/meeri.log
 filepath_data_photoSizeByTime_dirty=/tmp/meeri_photo_size_${date}_dirty.csv
 filepath_data_photoSizeByTime_clean=/tmp/meeri_photo_size_${date}_clean.csv
 filepath_data_photoSizeByTime=${path_html_persistent}/meeri_photo_size_${date}.csv
