@@ -1,16 +1,15 @@
 #!/bin/bash
+source ~/Meeri-Cam/env
 clear
 
+
 ## [ Parameters ] ##############################################################
-path_images=/var/www/html/ramdisk
-path_target=/var/www/html/persistent
-date=$(date +%Y%m%d)
-test -n "${1}" && append="_${1}" # Use argument 1 as appendix for filename
+date=${date}
+filepath_data=${filepath_data_photoSizeByTime}
+filepath_plot=${path_html_persistent}/${date}.svg
+
 
 ## [ Logic ] ###################################################################
-cd ${path_images}
-ls -l --time-style=+"%H:%M:%S" $(date +%Y%m%d)*.webp | tr -s " " "," | cut -d "," -f5,6 > ${path_target}/$(date +%Y%m%d)${append}.csv
-
 cat << EOF > /tmp/gnuplot_settings
   set datafile separator ','
 
@@ -38,11 +37,13 @@ cat << EOF > /tmp/gnuplot_settings
   set grid ytics xtics mxtics lt 1 lc rgb "#ee000000"
 
   set term svg size 7000, 1000
-  set output "${path_target}/$(date +%Y%m%d)${append}.svg"
+  set output "${filepath_plot}"
 
   # Styles (http://lowrank.net/gnuplot/intro/style-e.html) dots|impulses|steps|histeps|lines
   set key left
-  plot "${path_target}/$(date +%Y%m%d)${append}.csv" using 2:1 with histeps linecolor rgbcolor "#00aa00" title 'File Size', 30000 linecolor rgbcolor "red" notitle
+  plot "${filepath_data}" using 2:1 with histeps linecolor rgbcolor "#aa8100" title 'Dirty', \
+       "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#00aa00" title 'Clean', \
+        30000 linecolor rgbcolor "red" notitle
 EOF
 
 gnuplot -p /tmp/gnuplot_settings

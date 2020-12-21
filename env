@@ -1,0 +1,29 @@
+# This file is meant to be sourced by the other scripts to get a single point of truth
+date=$(date +%Y%m%d)
+date_time=$(date +%Y%m%d_%H%M%S)
+logging=1
+
+path_html_ramdisk=/var/www/html/ramdisk
+path_html_persistent=/var/www/html/persistent
+path_html_archive=/var/www/html/persistent/${date}
+path_log=~/meeri.log
+path_upload_onedrive=~/OneDrive/Meeri-Cam
+
+filename_photo_latest=current
+
+filepath_data_photoSizeByTime_dirty=/tmp/meeri_photo_size_${date}_dirty.csv
+filepath_data_photoSizeByTime_clean=/tmp/meeri_photo_size_${date}_clean.csv
+filepath_data_photoSizeByTime=${path_html_persistent}/meeri_photo_size_${date}.csv
+filepath_video_date=${path_html_persistent}/meeri_daily_${date}.mp4
+
+photo_intervall=10
+
+clean_min_absolute_size=30
+clean_min_relative_size=85
+clean_relative_size_reset_after=5
+
+upload_onedrive=1
+
+gpio_pin=17
+gpio_sensor_filepath=${path_html_ramdisk}/${filename_photo_latest}.webp
+gpio_sensor_threshold=45

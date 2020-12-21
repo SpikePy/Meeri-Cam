@@ -35,3 +35,12 @@ Exposure (Absolute)       155 (1%)        1 - 10000
 Exposure, Auto Priority   True            True | False
 Privacy                   False           True | False
 ```
+
+# Crontab
+Automatically run the script in the correct order by creating these cronjobs
+
+```
+@reboot     $HOME/Meeri-Cam/light.sh
+@reboot     $HOME/Meeri-Cam/capture.sh
+0  22 * * * $HOME/Meeri-Cam/job_wrapper.sh
+```
