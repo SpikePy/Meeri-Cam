@@ -44,7 +44,7 @@ fi
 
 
 ## [ Logic ] ###################################################################
-local time_start=$(date +%s)
+time_start=$(date +%s)
 
 # Get photo sizes before cleanup
 /bin/ls -l --time-style=+"%H:%M:%S" ${path_photos}/${date}*.webp | tr -s " " "," | cut -d "," -f5,6 > ${filepath_data_photoSizeByTime_dirty}
@@ -92,7 +92,7 @@ paste --delimiters="," ${filepath_data_photoSizeByTime_dirty} ${filepath_data_ph
 
 
 ## [ Logging ] #################################################################
-local time_finish=$(date +%s)
+time_finish=$(date +%s)
 
 test ${logging} -eq 0 && logfile=/dev/null
 

@@ -8,13 +8,13 @@ path_html_archive=${path_html_archive}
 path_log=${path_log}
 
 ## [ Logic ] ###################################################################
-local time_start=$(date +%s)
+time_start=$(date +%s)
 
 mkdir -p ${path_html_archive}
 
 mv ${path_html_ramdisk}/${date}* ${path_html_archive}
 
-local time_finished1=$(date +%s)
+time_finished1=$(date +%s)
 
 
 ## [ Log ] #####################################################################
