@@ -44,3 +44,34 @@ Automatically run the script in the correct order by creating these cronjobs
 @reboot     $HOME/Meeri-Cam/capture.sh
 0  22 * * * $HOME/Meeri-Cam/job_wrapper.sh
 ```
+# Setup OneDrive via rclone
+to upload photos/videos
+
+## Mount Onedrive on Startup
+```
+[Unit]
+Description=OneDrive (rclone)
+Documentation=https://gist.github.com/rolfn/4e9d373bb690adc7b1a8717d853190c1#synchronisieren-eines-lokalen-verzeichnisses-mit-dem-online-speichers
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/rclone --config %h/.config/rclone/rclone.conf --vfs-cache-mode writes mount onedrive:/Meeri-Cam %h/OneDrive/Meeri-Cam
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+```
+
+```
+[Unit]
+Description=Onedrive rclone (Timer)
+Documentation=https://rclone.org/docs/
+
+[Timer]
+OnActiveSec=20
+OnUnitInactiveSec=600
+
+[Install]
+WantedBy=default.target
+```
