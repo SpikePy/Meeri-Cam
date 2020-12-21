@@ -8,7 +8,7 @@ path_html_persistent=/var/www/html/persistent
 path_html_archive=/var/www/html/persistent/${date}
 path_upload_onedrive=~/OneDrive/Meeri-Cam
 
-filename_photo_latest=current
+filename_photo_latest=current.webp
 
 filepath_log=~/meeri.log
 filepath_data_photoSizeByTime_dirty=/tmp/meeri_photo_size_${date}_dirty.csv
@@ -26,4 +26,4 @@ upload_onedrive=1
 
 gpio_pin=17
 gpio_photo_filepath=${path_html_ramdisk}/${filename_photo_latest}.webp
-gpio_threshold_photo_size_kb=45
+gpio_threshold_photo_size_kb=50
