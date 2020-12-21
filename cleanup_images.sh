@@ -76,7 +76,7 @@ for file in $(/bin/ls -1 ${path_photos}/${date}*.webp); do
     let count_consecutive_relative_size_failed+=1
   else
     echo "Image ok"
-    relative_size_failed=0
+    count_consecutive_relative_size_failed=0
     absolute_size_before=${absolute_size_current}
   fi
 
