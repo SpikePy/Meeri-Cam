@@ -93,7 +93,7 @@ cat << EOF | tee -a ${filepath_log}
 $(date +"%Y-%m-%d %H:%M:%S")
   Cleanup Images:
     Deleted $((count_min_absolute_size_deleted + count_current_expectation_failed)) of ${count_files} files ($(( (count_min_absolute_size_deleted + count_current_expectation_failed) * 100 / count_files ))%)
-      Absolute filesize: ${count_min_absolute_size_deleted:-0}
-      Relative filesize: ${count_current_expectation_failed:-0}
+      Absolute filesize: ${count_min_absolute_size_deleted:-0} ($(( count_min_absolute_size_deleted * 100 / count_files ))%)
+      Relative filesize: ${count_current_expectation_failed:-0} ($(( count_current_expectation_failed * 100 / count_files ))%)
     Execution time: $(( time_finish - time_start ))s
 EOF
