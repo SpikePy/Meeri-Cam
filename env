@@ -12,9 +12,9 @@ path_upload_onedrive=~/OneDrive/Meeri-Cam
 filename_photo_latest=current.webp
 
 filepath_log=~/meeri.log
-filepath_data_photoSizeByTime_dirty=/tmp/meeri_photo_size_${date}_dirty.csv
-filepath_data_photoSizeByTime_clean=/tmp/meeri_photo_size_${date}_clean.csv
-filepath_data_photoSizeByTime=${path_html_persistent}/meeri_photo_size_${date}.csv
+filepath_data_photoSizeByTime_original=/tmp/meeri_photo_sizeByTime_${date}_original.csv
+filepath_data_photoSizeByTime_filtered=/tmp/meeri_photo_sizeByTime_${date}_filtered.csv
+filepath_data_photoSizeByTime=${path_html_persistent}/meeri_photo_sizeByTime_${date}.csv
 filepath_video_date=${path_html_persistent}/meeri_daily_${date}.mp4
 
 photo_intervall=10

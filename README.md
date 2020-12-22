@@ -47,8 +47,10 @@ Automatically run the script in the correct order by creating these cronjobs
 # Setup OneDrive via rclone
 to upload photos/videos
 
-## Mount Onedrive on Startup
-```
+## Mount Onedrive on Startup vis systemd
+
+vim ~/.config/systemd/user/onedrive.service
+```ini
 [Unit]
 Description=OneDrive (rclone)
 Documentation=https://gist.github.com/rolfn/4e9d373bb690adc7b1a8717d853190c1#synchronisieren-eines-lokalen-verzeichnisses-mit-dem-online-speichers
@@ -63,7 +65,8 @@ RestartSec=10
 WantedBy=default.target
 ```
 
-```
+vim ~/.config/systemd/user/onedrive.timer
+```ini
 [Unit]
 Description=Onedrive rclone (Timer)
 Documentation=https://rclone.org/docs/
@@ -74,4 +77,36 @@ OnUnitInactiveSec=600
 
 [Install]
 WantedBy=default.target
+```
+
+# Create SMB Shares
+Setup SMB-Shares to easily acccess and develop the project from another system.
+
+/etc/samba/smb.conf
+```ini
+
+[global]
+workgroup = WORKGROUP
+log file = /var/log/samba/log.%m
+max log size = 1000
+logging = file
+map to guest = bad user
+
+[meeri_cam]
+browseable = yes
+path = /var/www/html
+guest ok = yes
+read only = no
+create mask = 777
+
+[meeri_project]
+path = /home/pi/Meeri-Cam
+browseable = yes
+guest ok = yes
+force user = pi
+read only = no
+directory mask = 2775
+force directory mode = 2775
+directory security mask = 2775
+force directory security mode = 2775
 ```

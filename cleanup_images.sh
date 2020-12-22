@@ -13,8 +13,8 @@ source $(dirname $0)/env
 export path_photos=${path_html_ramdisk}
 export filepath_log=${filepath_log}
 
-export filepath_data_photoSizeByTime_dirty=${filepath_data_photoSizeByTime_dirty}
-export filepath_data_photoSizeByTime_clean=${filepath_data_photoSizeByTime_clean}
+export filepath_data_photoSizeByTime_original=${filepath_data_photoSizeByTime_original}
+export filepath_data_photoSizeByTime_filtered=${filepath_data_photoSizeByTime_filtered}
 export filepath_data_photoSizeByTime=${filepath_data_photoSizeByTime}
 
 # Minimal size in kb
@@ -45,7 +45,7 @@ fi
 time_start=$(date +%s)
 
 # Get photo sizes before cleanup
-/bin/ls -l --time-style=+"%H:%M:%S" ${path_photos}/${date}*.webp | tr -s " " "," | cut -d "," -f5,6 > ${filepath_data_photoSizeByTime_dirty}
+/bin/ls -l --time-style=+"%H:%M:%S" ${path_photos}/${date}*.webp | tr -s " " "," | cut -d "," -f5,6 > ${filepath_data_photoSizeByTime_original}
 
 for file in $(/bin/ls -1 ${path_photos}/${date}*.webp); do
   let count_files+=1
@@ -80,8 +80,8 @@ for file in $(/bin/ls -1 ${path_photos}/${date}*.webp); do
 done
 
 # Get photo sizes after cleanup
-/bin/ls -l --time-style=+"%H:%M:%S" ${path_photos}/${date}*.webp | tr -s " " "," | cut -d "," -f5,6 > ${filepath_data_photoSizeByTime_clean}
-paste --delimiters="," ${filepath_data_photoSizeByTime_dirty} ${filepath_data_photoSizeByTime_clean} > ${filepath_data_photoSizeByTime}
+/bin/ls -l --time-style=+"%H:%M:%S" ${path_photos}/${date}*.webp | tr -s " " "," | cut -d "," -f5,6 > ${filepath_data_photoSizeByTime_filtered}
+paste --delimiters="," ${filepath_data_photoSizeByTime_original} ${filepath_data_photoSizeByTime_filtered} > ${filepath_data_photoSizeByTime}
 
 
 ## [ Logging ] #################################################################
