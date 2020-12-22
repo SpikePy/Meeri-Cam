@@ -3,13 +3,13 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
-path_pictures=${path_html_ramdisk}
-path_video=${path_html_persistent}
-filepath_video_date=${filepath_video_date}
-filepath_log=${filepath_log}
-upload_onedrive=${upload_onedrive}
-path_upload_onedrive=${path_upload_onedrive}
-date=${date}
+export path_pictures=${path_html_ramdisk}
+export path_video=${path_html_persistent}
+export filepath_video_date=${filepath_video_date}
+export filepath_log=${filepath_log}
+export upload_onedrive=${upload_onedrive}
+export path_upload_onedrive=${path_upload_onedrive}
+export date=${date}
 
 
 ## [ Logic ] ###################################################################

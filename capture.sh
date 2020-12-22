@@ -3,8 +3,10 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] #############################################################
+export command_date_time=${command_date_time}
 export path_photos=${path_html_ramdisk}
 export filename_photo_latest=${filename_photo_latest}
+export gpio_photo_filepath=${gpio_photo_filepath}
 export path_thumbnails=${path_photos}/thumbnails
 export photo_intervall=${photo_intervall}
 
@@ -21,7 +23,8 @@ fswebcam \
   --loop ${photo_intervall} \
   --save ${path_photos}/${filename_photo_latest%.*}.jpg \
   --exec 'cwebp -quiet -q 85 ${path_photos}/${filename_photo_latest%.*}.jpg -o ${path_photos}/buffer.webp;
-          ln -f ${path_photos}/buffer.webp  ${path_photos}/${filename_photo_latest};
-          cp ${path_photos}/${filename_photo_latest} ${path_photos}/$(date +%Y%m%d_%H%M%S).webp;
-          cwebp -quiet -q 70 ${path_photos}/${filename_photo_latest%.*}.jpg -resize 480 0 -o ${path_thumbnails}/$(date +%Y%m%d_%H%M%S).webp;
+          cp ${path_photos}/buffer.webp ${path_photos}/${filename_photo_latest};
+          cp ${path_photos}/buffer.webp ${gpio_photo_filepath};
+          cp ${path_photos}/${filename_photo_latest} ${path_photos}/$(eval ${command_date_time}).webp;
+          cwebp -quiet -q 70 ${path_photos}/${filename_photo_latest%.*}.jpg -resize 480 0 -o ${path_thumbnails}/$(eval ${command_date_time}).webp;
           rm ${path_photos}/${filename_photo_latest%.*}.jpg'

@@ -3,17 +3,17 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
-date=${date}
-path_html_ramdisk=${path_html_ramdisk}
-path_html_archive=${path_html_archive}
-filepath_log=${filepath_log}
+export date=${date}
+export path_photos=${path_html_ramdisk}
+export path_html_archive=${path_html_archive}
+export filepath_log=${filepath_log}
 
 ## [ Logic ] ###################################################################
 time_start=$(date +%s)
 
 mkdir -p ${path_html_archive}
 
-mv ${path_html_ramdisk}/${date}* ${path_html_archive}
+mv ${path_photos}/${date}* ${path_html_archive}
 
 time_finished=$(date +%s)
 

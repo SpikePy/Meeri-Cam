@@ -1,7 +1,8 @@
 # This file is meant to be sourced by the other scripts to get a single point of truth
-date=$(date +%Y%m%d)
-date_time=$(date +%Y%m%d_%H%M%S)
+date=$(\date +%Y%m%d)
+command_date_time="\date +%Y%m%d_%H%M%S"
 logging=1
+debug=1
 
 path_html_ramdisk=/var/www/html/ramdisk
 path_html_persistent=/var/www/html/persistent
@@ -25,5 +26,5 @@ clean_lower_expectation_percent=2
 upload_onedrive=1
 
 gpio_pin=17
-gpio_photo_filepath=${path_html_ramdisk}/buffer.webp
+gpio_photo_filepath=/tmp/${filename_photo_latest}
 gpio_threshold_photo_size_kb=50

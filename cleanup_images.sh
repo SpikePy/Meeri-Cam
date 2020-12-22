@@ -10,25 +10,25 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
-path_photos=${path_html_ramdisk}
-filepath_log=${filepath_log}
+export path_photos=${path_html_ramdisk}
+export filepath_log=${filepath_log}
 
-filepath_data_photoSizeByTime_dirty=${filepath_data_photoSizeByTime_dirty}
-filepath_data_photoSizeByTime_clean=${filepath_data_photoSizeByTime_clean}
-filepath_data_photoSizeByTime=${filepath_data_photoSizeByTime}
+export filepath_data_photoSizeByTime_dirty=${filepath_data_photoSizeByTime_dirty}
+export filepath_data_photoSizeByTime_clean=${filepath_data_photoSizeByTime_clean}
+export filepath_data_photoSizeByTime=${filepath_data_photoSizeByTime}
 
 # Minimal size in kb
 # 1280x1024 webp 85%: 30kb
-clean_min_absolute_size=${clean_min_absolute_size}
+export clean_min_absolute_size=${clean_min_absolute_size}
 
 # Max relative size reduction in percent
-clean_initial_expectation_percent=${clean_initial_expectation_percent}
-clean_current_expectation_percent=${clean_initial_expectation_percent}
-clean_lower_expectation_percent=${clean_lower_expectation_percent}
+export clean_initial_expectation_percent=${clean_initial_expectation_percent}
+export clean_current_expectation_percent=${clean_initial_expectation_percent}
+export clean_lower_expectation_percent=${clean_lower_expectation_percent}
 
-debug=1
-logging=${logging}
-date=${date}
+export debug=${clean_debug:-${debug}}
+export logging=${logging}
+export date=${date}
 
 
 ## [ Debug ] ###################################################################

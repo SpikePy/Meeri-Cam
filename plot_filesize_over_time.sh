@@ -3,9 +3,9 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
-date=${date}
-filepath_data=${filepath_data_photoSizeByTime}
-filepath_plot=${path_html_persistent}/${date}_${clean_initial_expectation_percent}_${clean_lower_expectation_percent}.svg
+export date=${date}
+export filepath_data=${filepath_data_photoSizeByTime}
+export filepath_plot=${path_html_persistent}/${date}_${clean_initial_expectation_percent}_${clean_lower_expectation_percent}.svg
 
 
 ## [ Logic ] ###################################################################
@@ -22,8 +22,6 @@ cat << EOF > /tmp/gnuplot_settings
   set title 'Filesize over Time'
   set ylabel 'File Size'
   set xlabel 'Time'
-  set label "Minimal File Size" at "7:15:00",32000 textcolor "red"
-  set label "Minimal File Size" at "17:36:00",32000 textcolor "red"
 
   # Axis
   set autoscale y
@@ -40,9 +38,9 @@ cat << EOF > /tmp/gnuplot_settings
 
   # Styles (http://lowrank.net/gnuplot/intro/style-e.html) dots|impulses|steps|histeps|lines
   set key left
-  plot "${filepath_data}" using 2:1 with histeps linecolor rgbcolor "#cc00aa00" title "Original", \
-       "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#0000aa00" title "Initial expectation ${clean_initial_expectation_percent}%, lower expectation by ${clean_lower_expectation_percent}%", \
-        30000 linecolor rgbcolor "red" notitle
+  plot "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#0000aa00" title "Initial expectation ${clean_initial_expectation_percent}%, lower expectation by ${clean_lower_expectation_percent}%", \
+       "${filepath_data}" using 2:1 with histeps linecolor rgbcolor "#cc00aa00" title "Original", \
+        30000 linecolor rgbcolor "red" title "Minimal File Size"
 EOF
 
 gnuplot -p /tmp/gnuplot_settings
