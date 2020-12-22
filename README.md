@@ -3,7 +3,7 @@
 1. install webp fswebcam lighttpd `sudo apt install webp fswebcam lighttpd`
 2. add 'mimetype.assign   += ( ".webp" => "image/webp" )' to /etc/lighttpd/lighttpd.conf to make browser show webp images
 3. create a ramdisk to write images to, to  go easy on sd-card
-4. enable dir listing 
+4. enable dir listing
 5. `ln -f index.html /var/www/html/`
 
 ```

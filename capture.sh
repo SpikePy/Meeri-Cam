@@ -21,7 +21,7 @@ fswebcam \
   --loop ${photo_intervall} \
   --save ${path_photos}/${filename_photo_latest%.*}.jpg \
   --exec 'cwebp -quiet -q 85 ${path_photos}/${filename_photo_latest%.*}.jpg -o ${path_photos}/buffer.webp;
-          mv  ${path_photos}/buffer.webp  ${path_photos}/${filename_photo_latest};
-	        cp ${path_photos}/${filename_photo_latest} ${path_photos}/$(date +%Y%m%d_%H%M%S).webp;
+          ln -f ${path_photos}/buffer.webp  ${path_photos}/${filename_photo_latest};
+          cp ${path_photos}/${filename_photo_latest} ${path_photos}/$(date +%Y%m%d_%H%M%S).webp;
           cwebp -quiet -q 70 ${path_photos}/${filename_photo_latest%.*}.jpg -resize 480 0 -o ${path_thumbnails}/$(date +%Y%m%d_%H%M%S).webp;
           rm ${path_photos}/${filename_photo_latest%.*}.jpg'

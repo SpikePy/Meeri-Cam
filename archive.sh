@@ -15,7 +15,7 @@ mkdir -p ${path_html_archive}
 
 mv ${path_html_ramdisk}/${date}* ${path_html_archive}
 
-time_finished1=$(date +%s)
+time_finished=$(date +%s)
 
 
 ## [ Log ] #####################################################################
