@@ -9,4 +9,4 @@ ${pwd}/cleanup_images.sh
 ${pwd}/plot_filesize_over_time.sh
 ${pwd}/daily.sh
 ${pwd}/archive.sh
-sudo /sbin/shutdown -h 60
+sudo /sbin/shutdown -h 15

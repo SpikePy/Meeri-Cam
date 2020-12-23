@@ -9,21 +9,24 @@ export filename_photo_latest=${filename_photo_latest}
 export sensor_threshold=${gpio_threshold_photo_size_kb}
 export sensor_intervall=${photo_intervall}
 
+
 ## [ Logic ] ##################################################################
+# Disable GPIO when exiting
+trap "echo \"${gpio_pin}\" > /sys/class/gpio/unexport" EXIT
+
 # Enable GPIO and set it as output
-echo "${gpio_pin}" > /sys/class/gpio/export || true
-while [ "$(cat /sys/class/gpio/gpio17/direction)" != "out" ]; do
-  # TODO: view log on restart
-  echo "${date +%Y%m%d} gpio${gpio_pin} set to: $(cat /sys/class/gpio/gpio17/direction)" | tee -a ~/light.log
-  echo "out" > /sys/class/gpio/gpio17/direction
-  sleep 1
-done
+test -d /sys/class/gpio/${gpio_pin} || echo "${gpio_pin}" > /sys/class/gpio/export
+
+sleep 1
+echo "out" > /sys/class/gpio/gpio17/direction
 
 while true; do
   camera_status=$(pgrep fswebcam)
-  if [ ${camera_status} -ne 0 ]; then
+  if [ -z "${camera_status}" ]; then
+    echo "fswebcam not running, starting it"
     sleep ${sensor_intervall}
     fswebcam \
+      --background \
       --resolution 1280x1024 \
       --no-banner \
       --frames 20 \
@@ -33,8 +36,8 @@ while true; do
       --loop ${sensor_intervall} \
       --save ${path_photos}/${filename_photo_latest%.*}.jpg \
       --exec 'cwebp -quiet -q 85 ${path_photos}/${filename_photo_latest%.*}.jpg -o ${path_photos}/buffer.webp;
-              cp ${path_photos}/buffer.webp ${gpio_photo_filepath};
-              rm ${path_photos}/${filename_photo_latest%.*}.jpg'
+              rm ${path_photos}/${filename_photo_latest%.*}.jpg;
+              cp ${path_photos}/buffer.webp ${gpio_sensor_filepath}'
   fi
 
   sensor_value=$(du ${gpio_sensor_filepath} | cut -f1)
