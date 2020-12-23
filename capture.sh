@@ -3,12 +3,17 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] #############################################################
+photo_intervall=${photo_intervall}
+photo_combine_frames=${photo_combine_frames}
+photo_frames_per_second=${photo_frames_per_second}
+photo_quality=${photo_quality}
+
 export command_date_time=${command_date_time}
 export path_photos=${path_html_ramdisk}
 export filename_photo_latest=${filename_photo_latest}
 export gpio_photo_filepath=${gpio_photo_filepath}
 export path_thumbnails=${path_photos}/thumbnails
-export photo_intervall=${photo_intervall}
+
 
 ## [ Logic ] ##################################################################
 # MAke sure capturing is stopped when exiting
@@ -23,9 +28,9 @@ pkill fswebcam
 fswebcam \
   --resolution 1280x1024 \
   --no-banner \
-  --frames 20 \
-  --fps 10 \
-  --jpeg 100 \
+  --frames ${photo_combine_frames} \
+  --fps ${photo_frames_per_second} \
+  --jpeg ${photo_quality} \
   --loop ${photo_intervall} \
   --save ${path_photos}/${filename_photo_latest%.*}.jpg \
   --exec 'cwebp -quiet -q 85 ${path_photos}/${filename_photo_latest%.*}.jpg -o ${path_photos}/buffer.webp;

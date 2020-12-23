@@ -2,6 +2,10 @@
 source $(dirname $0)/env
 
 ## [ Parameters ] ##############################################################
+photo_combine_frames=${photo_combine_frames}
+photo_frames_per_second=${photo_frames_per_second}
+photo_quality=${photo_quality}
+
 export gpio_pin=${gpio_pin}
 export gpio_sensor_filepath=${gpio_photo_filepath}
 export path_photos=${path_html_ramdisk}
@@ -29,10 +33,9 @@ while true; do
       --background \
       --resolution 1280x1024 \
       --no-banner \
-      --frames 20 \
-      --fps 10 \
-      --skip 1 \
-      --jpeg 100 \
+      --frames ${photo_combine_frames} \
+      --fps ${photo_frames_per_second} \
+      --jpeg ${photo_quality} \
       --loop ${sensor_intervall} \
       --save ${path_photos}/${filename_photo_latest%.*}.jpg \
       --exec 'cwebp -quiet -q 85 ${path_photos}/${filename_photo_latest%.*}.jpg -o ${path_photos}/buffer.webp;

@@ -18,6 +18,9 @@ filepath_data_photoSizeByTime=${path_html_persistent}/meeri_photo_sizeByTime_${d
 filepath_video_date=${path_html_persistent}/meeri_daily_${date}.mp4
 
 photo_intervall=10
+photo_combine_frames=20
+photo_frames_per_second=10
+photo_quality=100
 
 clean_min_absolute_size=40
 clean_initial_expectation_percent=98
