@@ -2,58 +2,50 @@
 source $(dirname $0)/env
 
 ## [ Parameters ] ##############################################################
-photo_combine_frames=${photo_combine_frames}
-photo_frames_per_second=${photo_frames_per_second}
-photo_quality=${photo_quality}
-debug=${debug_light:-${debug}}
+filepath_log=${filepath_log}
 
-export gpio_pin=${gpio_pin}
-export gpio_sensor_filepath=${gpio_photo_filepath}
-export path_photos=${path_html_ramdisk}
-export filename_photo_latest=${filename_photo_latest}
-export sensor_threshold=${gpio_threshold_photo_size_kb}
-export sensor_intervall=${photo_intervall}
+light_gpio_pin=${light_gpio_pin}
+light_photo_filepath=${light_photo_filepath}
+light_on_photoSizeBelow_kb=${light_on_photoSizeBelow_kb}
+light_off_photoSizeAbove_kb=${light_off_photoSizeAbove_kb}
+sensor_intervall=${photo_intervall}
 
 
 ## [ Logic ] ##################################################################
 # Disable GPIO when exiting
-trap "echo \"${gpio_pin}\" > /sys/class/gpio/unexport" EXIT
+trap "echo \"${light_gpio_pin}\" > /sys/class/gpio/unexport && echo \"GPIO ${light_gpio_pin} disabled\"" EXIT
 
 # Enable GPIO and set it as output
-test -d /sys/class/gpio/${gpio_pin} || echo "${gpio_pin}" > /sys/class/gpio/export
+if [ ! -d /sys/class/gpio/gpio${light_gpio_pin} ];then
+  echo "${light_gpio_pin}" > /sys/class/gpio/export
+  sleep 1
+  echo "GPIO ${light_gpio_pin} enabled"
+else
+  echo "GPIO ${light_gpio_pin} already enabled"
+fi
 
-sleep 1
-echo "out" > /sys/class/gpio/gpio17/direction
+if [ "$(cat /sys/class/gpio/gpio${light_gpio_pin}/direction)" != "out" ]; then
+  echo "out" > /sys/class/gpio/gpio${light_gpio_pin}/direction
+  echo "GPIO ${light_gpio_pin} configured as output"
+else
+  echo "GPIO ${light_gpio_pin} already configured as output"
+fi
 
-while true; do
-  camera_status=$(pgrep fswebcam)
-  if [ -z "${camera_status}" ]; then
-    echo "fswebcam not running, starting it"
+
+if [ ! $(pgrep fswebcam) ]; then
+  echo "Webcam not recording, switching to manual mode"
+  echo "1" > /sys/class/gpio/gpio${light_gpio_pin}/value
+else
+  echo "Analyzing Webcam images to control the fairy lights"
+  while [ $(pgrep fswebcam) ]; do
+    sensor_value=$(du ${light_photo_filepath} | cut -f1)
+    if [ ${sensor_value:-100} -lt ${light_on_photoSizeBelow_kb} ]; then
+      echo "Switch light on: $(date +\"%Y-%m-%d %H:%M:%S\")"| tee -a ${filepath_log}
+      echo "1" > /sys/class/gpio/gpio${light_gpio_pin}/value
+    elif [ ${sensor_value:-100} -ge ${light_off_photoSizeAbove_kb} ]; then
+      echo "Switch light off: $(date +\"%Y-%m-%d %H:%M:%S\")"| tee -a ${filepath_log}
+      echo "0" > /sys/class/gpio/gpio${light_gpio_pin}/value
+    fi
     sleep ${sensor_intervall}
-    fswebcam \
-      --background \
-      --resolution 1280x1024 \
-      --no-banner \
-      --frames ${photo_combine_frames} \
-      --fps ${photo_frames_per_second} \
-      --jpeg ${photo_quality} \
-      --loop ${sensor_intervall} \
-      --save ${path_photos}/${filename_photo_latest%.*}.jpg \
-      --exec 'cwebp -quiet -q 85 ${path_photos}/${filename_photo_latest%.*}.jpg -o ${path_photos}/buffer.webp;
-              rm ${path_photos}/${filename_photo_latest%.*}.jpg;
-              cp ${path_photos}/buffer.webp ${gpio_sensor_filepath}'
-  fi
-
-
-  mogrify -gravity south -crop 50%x50%+300-0 ${gpio_sensor_filepath}
-  [ "${debug}" -eq 1 ] && cp ${gpio_sensor_filepath} ${path_photos}/debug/light_reference_$(eval ${command_date_time}).webp
-  sensor_value=$(du ${gpio_sensor_filepath} | cut -f1)
-  if [ ${sensor_value:-100} -lt ${sensor_threshold} ]; then
-    # Switch light on
-    echo "1" > /sys/class/gpio/gpio${gpio_pin}/value
-  else
-    # Switch light off
-    echo "0" > /sys/class/gpio/gpio${gpio_pin}/value
-  fi
-  sleep ${sensor_intervall}
-done
+  done
+fi

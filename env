@@ -1,16 +1,17 @@
 #!/bin/bash
 
 # This file is meant to be sourced by the other scripts to get a single point of truth
+alias command_date_time='\date +%Y%m%d_%H%M%S'
 date=$(\date +%Y%m%d)
-# Use like this: $(eval ${command_date_time}
-command_date_time="\date +%Y%m%d_%H%M%S"
 logging=1
 debug=1
 
 path_html_ramdisk=/var/www/html/ramdisk
 path_html_persistent=/var/www/html/persistent
 path_html_archive=/var/www/html/persistent/${date}
+path_thumbnails=${path_html_ramdisk}/thumbnails
 path_upload_onedrive=~/OneDrive/Meeri-Cam
+path_debug=${path_html_ramdisk}/debug
 
 filename_photo_latest=current.webp
 
@@ -29,12 +30,14 @@ clean_min_absolute_size=40
 clean_initial_expectation_percent=98
 clean_lower_expectation_percent=2
 
+video_crf=32
 upload_onedrive=1
 
-gpio_pin=17
-gpio_photo_filepath=/tmp/${filename_photo_latest}
-gpio_threshold_photo_size_kb=10
+light_gpio_pin=17
+light_photo_filepath=/tmp/${filename_photo_latest}
+light_on_photoSizeBelow_kb=10
+light_off_photoSizeAbove_kb=15
 
 
 
-mkdir --parent ${path_html_ramdisk}/debug
+mkdir --parent ${path_debug} ${path_thumbnails}

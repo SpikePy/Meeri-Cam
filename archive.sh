@@ -3,10 +3,10 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
-export date=${date}
-export path_photos=${path_html_ramdisk}
-export path_html_archive=${path_html_archive}
-export filepath_log=${filepath_log}
+date=${date}
+path_photos=${path_html_ramdisk}
+path_html_archive=${path_html_archive}
+filepath_log=${filepath_log}
 
 ## [ Logic ] ###################################################################
 time_start=$(date +%s)
