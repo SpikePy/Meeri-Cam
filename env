@@ -1,5 +1,8 @@
+#!/bin/bash
+
 # This file is meant to be sourced by the other scripts to get a single point of truth
 date=$(\date +%Y%m%d)
+# Use like this: $(eval ${command_date_time}
 command_date_time="\date +%Y%m%d_%H%M%S"
 logging=1
 debug=1
@@ -20,7 +23,7 @@ filepath_video_date=${path_html_persistent}/meeri_daily_${date}.mp4
 photo_intervall=10
 photo_combine_frames=20
 photo_frames_per_second=10
-photo_quality=100
+photo_quality=95
 
 clean_min_absolute_size=40
 clean_initial_expectation_percent=98
@@ -30,4 +33,8 @@ upload_onedrive=1
 
 gpio_pin=17
 gpio_photo_filepath=/tmp/${filename_photo_latest}
-gpio_threshold_photo_size_kb=50
+gpio_threshold_photo_size_kb=10
+
+
+
+mkdir --parent ${path_html_ramdisk}/debug

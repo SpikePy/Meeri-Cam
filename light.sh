@@ -5,6 +5,7 @@ source $(dirname $0)/env
 photo_combine_frames=${photo_combine_frames}
 photo_frames_per_second=${photo_frames_per_second}
 photo_quality=${photo_quality}
+debug=${debug_light:-${debug}}
 
 export gpio_pin=${gpio_pin}
 export gpio_sensor_filepath=${gpio_photo_filepath}
@@ -43,6 +44,9 @@ while true; do
               cp ${path_photos}/buffer.webp ${gpio_sensor_filepath}'
   fi
 
+
+  mogrify -gravity south -crop 50%x50%+300-0 ${gpio_sensor_filepath}
+  [ "${debug}" -eq 1 ] && cp ${gpio_sensor_filepath} ${path_photos}/debug/light_reference_$(eval ${command_date_time}).webp
   sensor_value=$(du ${gpio_sensor_filepath} | cut -f1)
   if [ ${sensor_value:-100} -lt ${sensor_threshold} ]; then
     # Switch light on
