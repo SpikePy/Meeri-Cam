@@ -3,9 +3,10 @@ source $(dirname $0)/env
 
 
 ## [ Parameters ] ##############################################################
-export date=${date}
-export filepath_data=${filepath_data_photoSizeByTime}
-export filepath_plot=${path_html_persistent}/${date}_${clean_initial_expectation_percent}_${clean_lower_expectation_percent}.svg
+date=${date}
+filepath_data=${filepath_data_photoSizeByTime}
+filepath_plot=${path_html_persistent}/${date}_${clean_initial_expectation_percent}_${clean_lower_expectation_percent}.svg
+clean_min_absolute_size_byte=${clean_min_absolute_size}000
 
 
 ## [ Logic ] ###################################################################
@@ -40,7 +41,7 @@ cat << EOF > /tmp/gnuplot_settings
   set key left
   plot "${filepath_data}" using 4:3 with histeps linecolor rgbcolor "#0000aa00" title "Initial expectation ${clean_initial_expectation_percent}%, lower expectation by ${clean_lower_expectation_percent}%", \
        "${filepath_data}" using 2:1 with histeps linecolor rgbcolor "#cc00aa00" title "Original", \
-        30000 linecolor rgbcolor "red" title "Minimal File Size"
+        ${clean_min_absolute_size_byte} linecolor rgbcolor "red" title "Minimal File Size"
 EOF
 
 gnuplot -p /tmp/gnuplot_settings

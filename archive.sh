@@ -11,7 +11,7 @@ filepath_log=${filepath_log}
 ## [ Logic ] ###################################################################
 time_start=$(date +%s)
 
-mkdir -p ${path_html_archive}
+mkdir --parent ${path_html_archive}
 
 mv ${path_photos}/${date}* ${path_html_archive}
 
@@ -20,7 +20,7 @@ time_finish=$(date +%s)
 
 ## [ Log ] #####################################################################
 cat << EOF | tee -a ${filepath_log}
-  Meeri Archive:
+  Archive Photos:
     Path: ${path_html_archive}
     Files:  $(/bin/ls -r1 | wc -l)
     Size: $(du -h ${path_html_archive} | cut -f1)

@@ -33,11 +33,7 @@ export date=${date}
 
 ## [ Debug ] ###################################################################
 if [ ${debug} -eq 1 ]; then
-  echo " ######################"
-  echo " # DEBUG MODE ENABLED #"
-  echo " ######################"
-  echo
-  mkdir -p ${path_photos}/delete
+  mkdir --parent ${path_photos}/delete
 fi
 
 

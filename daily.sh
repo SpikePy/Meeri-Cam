@@ -20,7 +20,7 @@ cd ${path_pictures}
 # Convert images to video (https://trac.ffmpeg.org/wiki/Encode/H.264)
 # preset: A preset is a collection of options that will provide a certain encoding speed to compression ratio. A slower preset will provide better compression (compression is quality per filesize).
 # crf:    The range of the CRF scale is 0–51, where 0 is lossless, 23 is the default, and 51 is worst quality possible.
-time ffmpeg -n -r 10 -pattern_type glob -i "${date}*.webp" -c:v libx264 -preset medium -crf ${video_crf} ${filepath_video_date}
+time ffmpeg -y -r 10 -pattern_type glob -i "${date}*.webp" -c:v libx264 -preset medium -crf ${video_crf} ${filepath_video_date}
 time_finish=$(date +%s)
 
 if [ "${upload_onedrive}" -eq 1 ]; then
@@ -31,7 +31,7 @@ fi
 
 ## [ Logging ] ##################################################################
 cat << EOF | tee -a ${filepath_log}
-  Meeri Daily:
+  Daily Summary Video:
     Size Photos: $(du -hc ${path_pictures}/${date}*.webp | tail -n1 | cut -f1)
     Size Video: $(du -h  ${filepath_video_date} | cut -f1)
     Execution time: $(( time_finish - time_start ))s

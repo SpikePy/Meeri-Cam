@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # This file is meant to be sourced by the other scripts to get a single point of truth
-alias command_date_time='\date +%Y%m%d_%H%M%S'
 date=$(\date +%Y%m%d)
 logging=1
 debug=1
 
-path_html_ramdisk=/var/www/html/ramdisk
-path_html_persistent=/var/www/html/persistent
-path_html_archive=/var/www/html/persistent/${date}
+path_html_root=/var/www/spikepy.v6.rocks
+path_html_ramdisk=${path_html_root}/ramdisk
+path_html_persistent=${path_html_root}/persistent
+path_html_archive=${path_html_persistent}/${date}
 path_thumbnails=${path_html_ramdisk}/thumbnails
 path_upload_onedrive=~/OneDrive/Meeri-Cam
 path_debug=${path_html_ramdisk}/debug
