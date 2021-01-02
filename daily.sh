@@ -23,16 +23,31 @@ cd ${path_pictures}
 time ffmpeg -y -r 10 -pattern_type glob -i "${date}*.webp" -c:v libx264 -preset medium -crf ${video_crf} ${filepath_video_date}
 time_finish=$(date +%s)
 
-if [ "${upload_onedrive}" -eq 1 ]; then
-  echo "Upload video to OneDrive"
-  cp ${filepath_video_date} ${path_upload_onedrive}
-fi
 
-
-## [ Logging ] ##################################################################
+## [ Logging ] #################################################################
 cat << EOF | tee -a ${filepath_log}
   Daily Summary Video:
     Size Photos: $(du -hc ${path_pictures}/${date}*.webp | tail -n1 | cut -f1)
     Size Video: $(du -h  ${filepath_video_date} | cut -f1)
     Execution time: $(( time_finish - time_start ))s
 EOF
+
+
+## [ Upload ] ##################################################################
+if [ ${upload_onedrive:-0} -eq 1 ]; then
+  systemctl --user start rclone.service
+
+  while [ "$(systemctl --user is-active rclone.service)" != "active" ]; do
+    let try+=1
+    sleep 3
+    if [ ${try:=0} -ge 5 ]; then 
+      echo "OneDrive not mounted" | tee -a ${filepath_log}
+      exit 1
+    fi
+  done
+
+  echo "Upload video to OneDrive" | tee -a ${filepath_log}
+  cp ${filepath_video_date} ${path_upload_onedrive}
+
+  systemctl --user stop rclone.service
+fi
