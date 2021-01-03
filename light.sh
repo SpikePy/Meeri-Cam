@@ -1,5 +1,6 @@
 #!/bin/bash
-source $(dirname $0)/env
+source $(dirname $0)/env.sh
+
 
 ## [ Parameters ] ##############################################################
 filepath_log=${filepath_log}
@@ -64,7 +65,7 @@ while true; do
         fi
       elif [ ${sensor_value:-100} -ge ${light_switch_photoSize} ]; then
         if (( ${count_switch_treshold_exceetions_current:=0} >= ${light_switch_treshold_exceetions} )); then
-          if [ "${toggle:=off}" = "on" ]; then 
+          if [ "${toggle:=off}" = "on" ]; then
             echo "Switch fairy light off: $(date +'%d.%m.%Y %H:%M:%S')" | tee -a ${filepath_log}
           fi
           toggle=off

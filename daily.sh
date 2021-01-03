@@ -1,5 +1,5 @@
 #!/bin/bash
-source $(dirname $0)/env
+source $(dirname $0)/env.sh
 
 
 ## [ Parameters ] ##############################################################
@@ -40,7 +40,7 @@ if [ ${upload_onedrive:-0} -eq 1 ]; then
   while [ "$(systemctl --user is-active rclone.service)" != "active" ]; do
     let try+=1
     sleep 3
-    if [ ${try:=0} -ge 5 ]; then 
+    if [ ${try:=0} -ge 5 ]; then
       echo "OneDrive not mounted" | tee -a ${filepath_log}
       exit 1
     fi

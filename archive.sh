@@ -1,5 +1,5 @@
 #!/bin/bash
-source $(dirname $0)/env
+source $(dirname $0)/env.sh
 
 
 ## [ Parameters ] ##############################################################

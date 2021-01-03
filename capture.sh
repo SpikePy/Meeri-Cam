@@ -1,5 +1,5 @@
 #!/bin/bash
-source $(dirname $0)/env
+source $(dirname $0)/env.sh
 
 
 ## [ Parameters ] #############################################################
@@ -19,13 +19,13 @@ trap "pkill fswebcam" EXIT
 
 if [ "${1}" = "share" ]; then
   mkdir --parents ${path_thumbnails}
-  
+
   # Kill fswebcam if it is already running
   # because just one application can use the device
   pkill fswebcam &&
   echo "Exit already running fswebcam" &&
   sleep 5
-  
+
   fswebcam \
     --device /dev/video0 \
     --resolution 1280x1024 \
