@@ -1,10 +1,10 @@
 {
-  "name": "Carpool",
-  "short_name": "Carpool",
+  "name": "Meri-Cam",
+  "short_name": "Meeri-Cam",
   "start_url": ".",
   "display": "standalone",
   "background_color" : "#fff" ,
-  "description": "Manage carpool",
+  "description": "Watch my Guinea Pigs",
   "icons": [
     {
       "src": "favicon.svg",
