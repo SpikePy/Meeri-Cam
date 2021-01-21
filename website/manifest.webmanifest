@@ -1,0 +1,14 @@
+{
+  "name": "Carpool",
+  "short_name": "Carpool",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color" : "#fff" ,
+  "description": "Manage carpool",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "size": "any"
+    }
+  ]
+}
