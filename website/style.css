@@ -5,11 +5,28 @@ html {
 
 body {
   margin: 0;
+  height: 100%;
   overflow: hidden;
   color: #eee;
 }
 
-img {
+.blur {
+  filter: blur(3px);
+  height: 100%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+#background {
+  height: 100%;
+  filter: blur(1px);
+  image-orientation: from-image;
+}
+
+#photo {
   image-orientation: from-image;
   display: block;
   text-align: center;
